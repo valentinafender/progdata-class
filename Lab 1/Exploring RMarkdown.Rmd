@@ -1,0 +1,19 @@
+---
+title: "Exploting RMarkdown"
+author: "Valentina Fender"
+date: "1/20/2022"
+output: html_document
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+ libray(tibble)
+```
+
+```{r}
+mtcars_tbl 
