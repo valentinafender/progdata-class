@@ -11,22 +11,79 @@ library(tidyverse)
 library(gapminder)
 ```
 
+```{r setup}
+gapminder
+```
+
 ## R Markdown
 
 This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
 
 When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
-
-```{r cars}
-summary(cars)
+# 1.1
+Use filter() to subset the gapminder data to three countries of your choice in the 1970’s.
+```{r}
+gapminder |>
+  filter(country %in% c("Mali", "China", "Sudan")  & year > 1969 & year < 1979)
 ```
 
-## Including Plots
-
-You can also embed plots, for example:
-
-```{r pressure, echo=FALSE}
-plot(pressure)
+# 1.2
+Start with the original gapminder data and use the pipe operator |> to first do the above filter and then select the “country” and “gdpPercap” variables.
+```{r}
+gapminder |>
+  select(country, gdpPercap, year) |>
+  filter(country %in% c("Mali", "China", "Sudan")  & year > 1969 & year < 1979)
 ```
 
+# 1.3
+Make a new variable in gapminder for the change in life expectancy from the previous measurement for that country. Filter this table to show all of the entries that have experienced a drop in life expectancy. Save this result as a new object.
+
+```{r}
+gapminder |>
+  select(country, lifeExp) |>
+  filter(country %in% c("Mali"))|>
+  mutate(droplifeExp = lifeExp - lag(lifeExp))
+```
+## Hint: you might find the lag() or diff() functions useful.
 Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+
+# 1.4
+Filter gapminder so that it shows the max GDP per capita experienced by each country.
+
+```{r}
+gapminder |>
+  group_by(country) |>
+  summarize(max_GDP = max(gdpPercap))
+```
+
+
+## Hint: you might find the max() function useful here.
+
+
+# 1.5
+Produce a scatterplot of Canada’s life expectancy vs. GDP per capita using ggplot2.
+In your plot, put GDP per capita on a log scale.
+
+
+```{r}
+ggplot(gapminder) +
+  aes(x = lifeExp, y = gdpPercap) + 
+  geom_point() +
+  scale_x_continuous(
+    name = "canada life exp",
+    trans = "log10")
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
