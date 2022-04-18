@@ -1,0 +1,93 @@
+---
+title: "Lab 5A"
+author: "Valentina Fender"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+library(tidyverse)
+
+library(dplyr)
+
+lotr  <- read_csv("https://raw.githubusercontent.com/jennybc/lotr-tidy/master/data/lotr_tidy.csv") |> 
+  rename(Species = Race)
+```
+
+
+```{r blank original}
+(lotr_wide <- lotr |> 
+  pivot_wider(FILL_THIS_IN = c(Film, Gender), 
+              FILL_THIS_IN = Species, 
+              FILL_THIS_IN = Words)) 
+```
+ 
+# 2. Widen the data so that we see the words spoken by each species, by putting species as its own column.
+
+```{r}
+(lotr_wide <- lotr |> 
+  pivot_wider(names_from = c(Film, Gender), 
+              id_cols = Species, 
+              values_from = Words))
+```
+
+^The code above is absolutely beautiful and perfect in every way. I love it so much.
+
+`
+
+```{r my attempts}
+(lotr_w2 <- lotr |>
+   pivot_wider(names_from = c(Film, Gender)))
+```
+
+```{r my attempts}
+(lotr_w3 <- lotr |> 
+  pivot_wider(names_from = c(Film, Gender), 
+              id_cols = Species, 
+              values_from = Words))
+```
+
+
+
+##Notes: pivot_wider() is the opposite of pivot_longer(): it makes a dataset wider by increasing the number of columns and decreasing the number of rows. It’s relatively rare to need pivot_wider() to make tidy data, but it’s often useful for creating summary tables for presentation, or data in a format needed by other tools.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
